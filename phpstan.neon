@@ -1,0 +1,23 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+
+    paths:
+        - app
+
+    level: 2
+
+    ignoreErrors:
+        -
+            message: '#Call to an undefined method Illuminate\\Auth\\AuthManager\:\:refresh\(\)\.#'
+            path: app/Http/Controllers/Api/ApiAuthDashboardController.php
+        -
+            message: '#Call to an undefined method Illuminate\\Auth\\AuthManager\:\:factory\(\)\.#'
+            path: app/Http/Controllers/Api/ApiAuthDashboardController.php
+
+    excludePaths:
+        - ./vendor
+        - ./storage
+
+    checkMissingIterableValueType: false

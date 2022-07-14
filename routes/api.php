@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ApiAuthDashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +13,17 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::middleware('api')
+    ->group(static function () {
+        Route::post('login', [ApiAuthDashboardController::class, 'login'])->name('login');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+        Route::middleware('auth:api')
+            ->group(static function () {
+                Route::controller(ApiAuthDashboardController::class)
+                    ->group(static function () {
+                        Route::post('logout', 'logout')->name('logout');
+                        Route::post('refresh', 'refresh')->name('refresh');
+                        Route::post('me', 'me')->name('me');
+                    });
+            });
+    });

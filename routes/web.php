@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', static function () {
     return view('welcome');
 });
+
+Route::middleware('auth')
+    ->name('dashboard.')
+    ->controller(DashboardController::class)
+    ->group(static function () {
+        Route::get('/dashboard', 'view')->name('view');
+    });
+
+require __DIR__.'/auth.php';
