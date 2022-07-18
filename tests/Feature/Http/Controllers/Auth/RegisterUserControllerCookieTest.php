@@ -4,18 +4,31 @@ namespace Tests\Feature\Http\Controllers\Auth;
 
 use Illuminate\Foundation\Testing\WithFaker;
 
-class RegisterUserControllerTest extends \Tests\TestCase
+/**
+ * Тестирование обработки куки при регистрации.
+ */
+class RegisterUserControllerCookieTest extends \Tests\TestCase
 {
     use WithFaker;
 
-    public function testRegistrationScreenCanBeRendered(): void
+    /**
+     * Тест установки куки при посещении страницы регистрации.
+     *
+     * @return void
+     */
+    public function testCookieIsSetOnRegistrationPage(): void
     {
         $this->get('/register')
             ->assertCookie('register_page_first_open_date')
             ->assertStatus(200);
     }
 
-    public function testNewUsersCanRegister(): void
+    /**
+     * Тестирует корректное сохранение куки в БД и последующий показ ее данных на фронте.
+     *
+     * @return void
+     */
+    public function testHandleCookieData(): void
     {
         $cookieValue = date('Y-m-d H:i:s');
 
